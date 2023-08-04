@@ -4,14 +4,14 @@ import { messageCountList, channels } from './jsonContent';
 
 const engagementHelper = {
     engagementMessageOverTimeChartOptions: () => {
-        const channelsWithDataForMoreThanOneDate = channels.filter((channel) => {
+        const moreThanOne = channels.filter((channel) => {
             const channelId = channel.id;
             const messageDates = messageCountList.filter((message) => message.channelId === channelId);
             return messageDates.length > 1;
         });
 
         const chartData = messageCountList
-            .filter((message) => channelsWithDataForMoreThanOneDate.some((channel) => channel.id === message.channelId))
+            .filter((message) => moreThanOne.some((channel) => channel.id === message.channelId))
             .map((item) => ({
                 x: new Date(item.timeBucket).getTime(),
                 y: parseInt(item.count),
